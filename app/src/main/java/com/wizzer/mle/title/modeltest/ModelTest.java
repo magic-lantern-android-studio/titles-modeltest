@@ -8,7 +8,10 @@ import java.io.IOException;
 
 // Import Android classes.
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.content.res.Resources;
+import android.content.pm.ConfigurationInfo;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -109,6 +112,17 @@ public class ModelTest extends Activity
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+
+        // Check if the system supports OpenGL ES 2.0.
+        final ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        final ConfigurationInfo configurationInfo = activityManager.getDeviceConfigurationInfo();
+        final boolean supportsEs2 = configurationInfo.reqGlEsVersion >= 0x20000;
+
+        if (! supportsEs2)
+        {
+            Log.e(com.wizzer.mle.title.modeltest.ModelTest.DEBUG_TAG, "OpenGL ES 2.0 required to run this title.");
+            System.exit(-1);
+        }
         
         // Parse the application resources.
         if (! parseResources(getResources()))
