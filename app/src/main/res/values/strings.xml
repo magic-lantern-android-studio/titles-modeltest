@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Magic Lantern 3D Model Test Title</string>
+    <string name="logo_filename">wwlogo.png</string>
+    <string name="model_box">box.obj</string>
+</resources>
