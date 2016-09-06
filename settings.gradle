@@ -1,1 +1,1 @@
-include ':app'
+include ':app', ':min3d-debug'
