@@ -64,9 +64,7 @@ public class ModelTest extends Activity
     private MlRotation m_orientation;
     // The scale of the model;
     private MlVector3 m_scale;
-    // Output tag for logging status messages.
-    private static String DEBUG_TAG = "Magic Lantern Model Test";
-    
+
     /**
      * The main loop of execution.
      */
@@ -122,14 +120,14 @@ public class ModelTest extends Activity
 
         if (! supportsEs2)
         {
-            Log.e(com.wizzer.mle.title.modeltest.ModelTest.DEBUG_TAG, "OpenGL ES 2.0 required to run this title.");
+            Log.e(MleTitle.DEBUG_TAG, "OpenGL ES 2.0 required to run this title.");
             System.exit(-1);
         }
         
         // Parse the application resources.
         if (! parseResources(getResources()))
         {
-        	Log.e(com.wizzer.mle.title.modeltest.ModelTest.DEBUG_TAG, "Unable to parse title resources.");
+        	Log.e(MleTitle.DEBUG_TAG, "Unable to parse title resources.");
             System.exit(-1);
         }
         
@@ -177,7 +175,7 @@ public class ModelTest extends Activity
 	        
         } catch (MleRuntimeException ex)
         {
-        	Log.e(com.wizzer.mle.title.modeltest.ModelTest.DEBUG_TAG, "Unable to create and initialize the Stage.");
+        	Log.e(MleTitle.DEBUG_TAG, "Unable to create and initialize the Stage.");
             System.exit(-1);
         }
     }
@@ -200,7 +198,7 @@ public class ModelTest extends Activity
 	        MleSet.setCurrentSet(modelSet);
         } catch (MleRuntimeException ex)
         {
-        	Log.e(com.wizzer.mle.title.modeltest.ModelTest.DEBUG_TAG, "Unable to create and initialize the Set.");
+        	Log.e(MleTitle.DEBUG_TAG, "Unable to create and initialize the Set.");
             System.exit(-1);
         }
 
@@ -226,15 +224,15 @@ public class ModelTest extends Activity
 	        in.close();
         } catch (Resources.NotFoundException ex)
         {
-        	Log.e(com.wizzer.mle.title.modeltest.ModelTest.DEBUG_TAG, "Resource, " + resourceName + ", does not exist.");
+        	Log.e(MleTitle.DEBUG_TAG, "Resource, " + resourceName + ", does not exist.");
             System.exit(-1);
         } catch (IOException ex)
         {
-        	Log.e(com.wizzer.mle.title.modeltest.ModelTest.DEBUG_TAG, "Unable to access resource, " + resourceName + ", due to IO error.");
+        	Log.e(MleTitle.DEBUG_TAG, "Unable to access resource, " + resourceName + ", due to IO error.");
             System.exit(-1);        	
         } catch (MleRuntimeException ex)
         {
-        	Log.e(com.wizzer.mle.title.modeltest.ModelTest.DEBUG_TAG, ex.getMessage());
+        	Log.e(MleTitle.DEBUG_TAG, ex.getMessage());
         	System.exit(-1);   
         }
         
@@ -267,7 +265,7 @@ public class ModelTest extends Activity
             modelActor.setProperty("scale", scaleProp);
         } catch (MleRuntimeException ex)
         {
-        	Log.e(com.wizzer.mle.title.modeltest.ModelTest.DEBUG_TAG, "Unable to set property.");
+        	Log.e(MleTitle.DEBUG_TAG, "Unable to set property.");
             System.exit(-1);
         }
        
@@ -282,7 +280,7 @@ public class ModelTest extends Activity
             ((Mle3dSet)MleSet.getCurrentSet()).attachRoles(null,modelRole);
         } catch (MleRuntimeException ex)
         {
-        	Log.e(com.wizzer.mle.title.modeltest.ModelTest.DEBUG_TAG, "Unable to bind Role to Set.");
+        	Log.e(MleTitle.DEBUG_TAG, "Unable to bind Role to Set.");
             System.exit(-1);            
         }
         
@@ -292,7 +290,7 @@ public class ModelTest extends Activity
             modelActor.init();
         } catch (MleRuntimeException ex)
         {
-        	Log.e(com.wizzer.mle.title.modeltest.ModelTest.DEBUG_TAG, "Unable to initialize Actor.");
+        	Log.e(MleTitle.DEBUG_TAG, "Unable to initialize Actor.");
             System.exit(-1);            
         }
         
@@ -303,7 +301,7 @@ public class ModelTest extends Activity
                     MleEventManager.MLE_QUIT,new MleShutdownCallback(),null);
         } catch (MleRuntimeException ex)
         {
-        	Log.e(com.wizzer.mle.title.modeltest.ModelTest.DEBUG_TAG, "Unable to install shutdown callback.");
+        	Log.e(MleTitle.DEBUG_TAG, "Unable to install shutdown callback.");
             System.exit(-1);            
         }
         
