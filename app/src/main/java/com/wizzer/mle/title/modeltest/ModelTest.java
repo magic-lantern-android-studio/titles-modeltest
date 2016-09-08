@@ -16,9 +16,11 @@ import android.os.Bundle;
 import android.util.Log;
 
 // Import Magic Lantern Runtime Engine classes.
+import com.wizzer.mle.math.MlMath;
 import com.wizzer.mle.math.MlRotation;
 import com.wizzer.mle.math.MlTransform;
 import com.wizzer.mle.math.MlVector3;
+import com.wizzer.mle.math.MlVector4;
 
 import com.wizzer.mle.runtime.MleTitle;
 import com.wizzer.mle.runtime.ResourceManager;
@@ -243,19 +245,31 @@ public class ModelTest extends Activity
             int length = resourceName.length();
             byte[] buffer = resourceName.getBytes();
             ByteArrayInputStream input = new ByteArrayInputStream(buffer);
-            
-            MleProp property = new MleProp(length,input);
-            modelActor.setProperty("model",property);
+            MleProp modelProp = new MleProp(length, input);
+            modelActor.setProperty("model", modelProp);
+
+            // ToDo: Set the 'texture' property on the actor. This demonstration should
+            // not require a texture to test Magic Lantern 3D capabilities.
+
+            // Set the 'position' property on the actor.
+            byte[] position = createPositionProperty(0.0F, 0.0F, 0.0F);
+            MleProp positionProp = new MleProp(position.length, new ByteArrayInputStream(position));
+            modelActor.setProperty("position", positionProp);
+
+            // Set the 'orientation' property on the actor.
+            byte[] orientation = createOrientationProperty(0.0F, 0.0F, 0.0F, 1.0F);
+            MleProp orientationProp = new MleProp(orientation.length, new ByteArrayInputStream(orientation));
+            modelActor.setProperty("orientation", orientationProp);
+
+            // Set the 'scale' property on the actor.
+            byte[] scale = createScaleProperty(1.0F, 1.0F, 1.0F);
+            MleProp scaleProp = new MleProp(scale.length, new ByteArrayInputStream(scale));
+            modelActor.setProperty("scale", scaleProp);
         } catch (MleRuntimeException ex)
         {
-        	Log.e(com.wizzer.mle.title.modeltest.ModelTest.DEBUG_TAG, "Unable to set property 'model'.");
+        	Log.e(com.wizzer.mle.title.modeltest.ModelTest.DEBUG_TAG, "Unable to set property.");
             System.exit(-1);
         }
-
-        // ToDo: Set the 'texture' property on the actor.
-        // ToDo: Set the 'position' property on the actor.
-        // ToDo: Set the 'orientation' property on the actor.
-        // ToDo: Set the 'scale' property on the actor.
        
         // Create a 3D Role. This constructor will attach the Role to
         // the specified Actor. It will also be associated with the current Set.
@@ -348,5 +362,53 @@ public class ModelTest extends Activity
     {
         super.onDestroy();
     	Log.i(MleTitle.DEBUG_TAG, "Received onDestroy().");
+    }
+
+    // Convenience utility for packing position parameters into a byte array.
+    private byte[] createPositionProperty(float x, float y, float z)
+        throws MleRuntimeException
+    {
+        byte[] property = new byte[12];
+        MlVector3 value = new MlVector3(x, y, z);
+
+        try {
+            MlMath.convertVector3ToByteArray(0, property, value);
+        } catch (IOException ex) {
+            throw new MleRuntimeException(ex.getMessage());
+        }
+
+        return property;
+    }
+
+    // Convenience utility for packing orientation parameters into a byte array.
+    private byte[] createOrientationProperty(float x, float y, float z, float w)
+        throws MleRuntimeException
+    {
+        byte[] property = new byte[16];
+        MlVector4 value = new MlVector4(x, y, z, w);
+
+        try {
+            MlMath.convertVector4ToByteArray(0, property, value);
+        } catch (IOException ex) {
+            throw new MleRuntimeException(ex.getMessage());
+        }
+
+        return property;
+    }
+
+    // Convenience utility for packing scale parameters into a byte array.
+    private byte[] createScaleProperty(float x, float y, float z)
+       throws MleRuntimeException
+    {
+        byte[] property = new byte[12];
+        MlVector3 value = new MlVector3(x, y, z);
+
+        try {
+            MlMath.convertVector3ToByteArray(0, property, value);
+        } catch (IOException ex) {
+            throw new MleRuntimeException(ex.getMessage());
+        }
+
+        return property;
     }
 }
