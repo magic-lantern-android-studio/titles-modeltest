@@ -250,7 +250,7 @@ public class ModelTest extends Activity
             // not require a texture to test Magic Lantern 3D capabilities.
 
             // Set the 'position' property on the actor.
-            byte[] position = createPositionProperty(0.0F, 0.0F, 0.0F);
+            byte[] position = createPositionProperty(0.0F, 0.0F, -5.0F);
             MleProp positionProp = new MleProp(position.length, new ByteArrayInputStream(position));
             modelActor.setProperty("position", positionProp);
 
